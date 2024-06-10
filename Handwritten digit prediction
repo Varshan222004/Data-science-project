@@ -1,0 +1,215 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Handwritten Digit Prediction - Classification Analysis.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyPZl4d0nA5Qmq8X1mDqSb1O"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "dqZ-nhxiganh"
+      },
+      "source": [
+        "# Handwritten Digit Prediction - Classification Analysis"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Xns_rCdhh-vZ"
+      },
+      "source": [
+        "## Objective",
+        "To develop a machine learning model that can accurately classify handwritten digits (0-9) using the MNIST dataset."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Source",
+        "The MNIST dataset is a classic benchmark dataset for handwritten digit classification. It consists of 28x28 pixel grayscale images of handwritten digits along with their corresponding labels (0-9)."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Import Library",
+        "```python",
+        "import numpy as np",
+        "import matplotlib.pyplot as plt",
+        "from sklearn.model_selection import train_test_split",
+        "from sklearn.datasets import fetch_openml",
+        "from sklearn.preprocessing import StandardScaler",
+        "from sklearn.neighbors import KNeighborsClassifier",
+        "from sklearn.metrics import accuracy_score, confusion_matrix, classification_report",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Import Data",
+        "```python",
+        "# Load MNIST dataset",
+        "mnist = fetch_openml('mnist_784', version=1, as_frame=False)",
+        "X, y = mnist['data'], mnist['target']",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Describe Data",
+        "```python",
+        "# Check the shape of the data",
+        "print('Shape of X:', X.shape)",
+        "print('Shape of y:', y.shape)",
+        "# Display sample image and label",
+        "idx = 0",
+        "plt.imshow(X[idx].reshape(28, 28), cmap='binary')",
+        "plt.axis('off')",
+        "plt.title('Label: {}'.format(y[idx]))",
+        "plt.show()",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Visualization",
+        "```python",
+        "# Visualize distribution of labels",
+        "plt.figure(figsize=(10, 5))",
+        "plt.hist(y, bins=10, color='skyblue', edgecolor='black')",
+        "plt.title('Distribution of Labels')",
+        "plt.xlabel('Digit')",
+        "plt.ylabel('Frequency')",
+        "plt.show()",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Preprocessing",
+        "```python",
+        "# Split data into training and testing sets",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)",
+        "# Standardize feature data",
+        "scaler = StandardScaler()",
+        "X_train_scaled = scaler.fit_transform(X_train)",
+        "X_test_scaled = scaler.transform(X_test)",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Define Target Variable (y) and Feature Variables (X)",
+        "```python",
+        "# Already done in Data Preprocessing",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Train Test Split",
+        "```python",
+        "# Already done in Data Preprocessing",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Modeling",
+        "```python",
+        "# Train a k-Nearest Neighbors classifier",
+        "knn = KNeighborsClassifier(n_neighbors=5)",
+        "knn.fit(X_train_scaled, y_train)",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Model Evaluation",
+        "```python",
+        "# Evaluate the model on the test set",
+        "y_pred = knn.predict(X_test_scaled)",
+        "# Print accuracy score",
+        "print('Accuracy:', accuracy_score(y_test, y_pred))",
+        "# Print confusion matrix",
+        "print('Confusion Matrix:\\n', confusion_matrix(y_test, y_pred))",
+        "# Print classification report",
+        "print('Classification Report:\\n', classification_report(y_test, y_pred))",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Prediction",
+        "```python",
+        "# Make predictions on new data if needed",
+        "# For example:",
+        "# new_data = ...",
+        "# new_data_scaled = scaler.transform(new_data)",
+        "# predicted_labels = knn.predict(new_data_scaled)",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Explanation",
+        "This project aimed to develop a machine learning model for handwritten digit classification using the MNIST dataset. The data was pre
